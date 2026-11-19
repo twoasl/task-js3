@@ -14,35 +14,34 @@ let cart = [
 ];
 
 function capital(word) {
-  return word.charAt(0).toUpperCase() + word.slice(1);
+  return word[0].toUpperCase() + word.slice(1);
 }
 
-function showCart(ul) {
-  ul.innerHTML = "";
+function showCart(list) {
+  list.innerHTML = "";
   for (let i = 0; i < cart.length; i++) {
     let item = cart[i];
-    let sum = item.price * item.qty;
-    ul.innerHTML += "<li>" + capital(item.name) + " - " + item.price + " EGP x " + item.qty + " = " + sum + " EGP</li>";
+    list.innerHTML += "<li>" + capital(item.name) + " - " + item.price + " EGP x " + item.qty + " = " + item.price * item.qty + " EGP</li>";
   }
 }
 
-let cartList = document.getElementById("cart");
-showCart(cartList);
+let list1 = document.getElementById("cart");
+showCart(list1);
 
 cart.push({ name: "monitor", price: 3000, qty: 1 });
 cart.unshift({ name: "gift", price: 0, qty: 1 });
 cart.pop();
 cart.shift();
 
-let secondList = document.createElement("ul");
-document.getElementById("cart").after(secondList);
-showCart(secondList);
+let list2 = document.createElement("ul");
+list1.after(list2);
+showCart(list2);
 
 document.getElementById("count").innerHTML = "You have " + cart.length + " items in your cart";
 
 let total = 0;
 for (let i = 0; i < cart.length; i++) {
-  total += cart[i].price * cart[i].qty;
+  total = total + cart[i].price * cart[i].qty;
 }
 document.getElementById("total").innerHTML = "Total: " + total.toFixed(2) + " EGP";
 
@@ -50,7 +49,6 @@ let shipping = document.createElement("p");
 if (total > 1000) {
   shipping.innerHTML = "You got free shipping!";
 } else {
-  let left = 1000 - total;
-  shipping.innerHTML = "Add " + left + " EGP more for free shipping";
+  shipping.innerHTML = "Add " + (1000 - total) + " EGP more for free shipping";
 }
 document.getElementById("total").after(shipping);
